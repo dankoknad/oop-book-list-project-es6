@@ -54,6 +54,12 @@ UI.prototype.showAlert = function(msg, className) {
   }, 3000)
 }
 
+UI.prototype.deleteBook = function(target) {
+  if (target.className === 'delete') {
+    target.parentElement.parentElement.remove()
+  }
+}
+
 // Event Listeners
 
 formEl.addEventListener('submit', function(e) {
@@ -86,4 +92,17 @@ formEl.addEventListener('submit', function(e) {
   }
 
   // console.log(book)
+})
+
+bookListEl.addEventListener('click', function(e) {
+  // console.log(e.target)
+
+  // instantiate ui
+  var ui = new UI()
+
+  // delete book
+  ui.deleteBook(e.target)
+
+  // success alert
+  ui.showAlert('A book has been deleted', 'success')
 })
