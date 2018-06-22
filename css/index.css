@@ -1,12 +1,20 @@
+h1 {
+  margin-bottom: 70px;
+}
+
 .success,
 .error {
+  position: absolute;
+  top: 70px;
+  left: 0;
+  right: 0;
   color: #fff;
-  padding: 5px;
+  padding: 5px 10px;
   margin: 5px 0 15px 0;
 }
 
 .success {
-  background: #0f0;
+  background: #32CD32;
 }
 
 .error {
