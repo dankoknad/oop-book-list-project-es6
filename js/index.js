@@ -57,11 +57,16 @@ formEl.addEventListener('submit', function(e) {
   // instantiate ui
   var ui = new UI()
 
-  // add book to list
-  ui.addBook(book)
+  // validate
+  if (!title || !author || !isbn) {
+    console.log('something is wrong!!')
+  } else {
+    // add book to list
+    ui.addBook(book)
 
-  // clear form fields
-  ui.clearFields()
+    // clear form fields
+    ui.clearFields()
+  }
 
   // console.log(book)
 })
