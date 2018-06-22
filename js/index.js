@@ -1,3 +1,9 @@
+var formEl = document.getElementById('book-form'),
+  titleInputEl = document.getElementById('title'),
+  authorInputEl = document.getElementById('author'),
+  isbnInputEl = document.getElementById('isbn'),
+  bookListEl = document.getElementById('book-list')
+
 // Book Constructor
 function Book(title, author, isbn) {
   this.title = title
@@ -9,7 +15,6 @@ function Book(title, author, isbn) {
 function UI() {}
 
 UI.prototype.addBook = function(book) {
-  var bookListEl = document.getElementById('book-list')
   // create new row el
   var bookRowEl = document.createElement('tr')
 
@@ -29,11 +34,14 @@ UI.prototype.addBook = function(book) {
   bookListEl.appendChild(bookRowEl)
 }
 
+UI.prototype.clearFields = function() {
+  titleInputEl.value = ''
+  authorInputEl.value = ''
+  isbnInputEl.value = ''
+  titleInputEl.focus()
+}
+
 // Event Listeners
-var formEl = document.getElementById('book-form'),
-  titleInputEl = document.getElementById('title'),
-  authorInputEl = document.getElementById('author'),
-  isbnInputEl = document.getElementById('isbn')
 
 formEl.addEventListener('submit', function(e) {
   e.preventDefault()
@@ -51,6 +59,9 @@ formEl.addEventListener('submit', function(e) {
 
   // add book to list
   ui.addBook(book)
+
+  // clear form fields
+  ui.clearFields()
 
   // console.log(book)
 })
