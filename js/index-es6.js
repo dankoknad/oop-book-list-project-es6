@@ -55,8 +55,46 @@ class UI {
   }
 }
 
+// Local Storage
+class Store {
+  static getBooks() {
+    let books
+    if (localStorage.getItem('books') === null) {
+      books = []
+    } else {
+      books = JSON.parse(localStorage.getItem('books'))
+    }
+
+    return books
+  }
+
+  static displayBooks() {}
+
+  static addBook(book) {
+    const books = Store.getBooks()
+    books.push(book)
+    localStorage.setItem('books', JSON.stringify(books))
+  }
+
+  static removeBook(isbn) {
+    let books = Store.getBooks()
+    books = books.filter(book => book.isbn !== isbn)
+    localStorage.setItem('books', JSON.stringify(books))
+  }
+}
+
 // Event Listeners
-formEl.addEventListener('submit', function(e) {
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOM fully loaded and parsed')
+  const books = Store.getBooks()
+
+  // instantiate ui
+  var ui = new UI()
+
+  books.forEach(book => ui.addBook(book))
+})
+
+formEl.addEventListener('submit', e => {
   e.preventDefault()
 
   // get form values
@@ -78,24 +116,24 @@ formEl.addEventListener('submit', function(e) {
     // add book to list
     ui.addBook(book)
 
+    // add book to LS
+    Store.addBook(book)
+
     // success alert
     ui.showAlert('A book has been added', 'success')
 
     // clear form fields
     ui.clearFields()
   }
-
-  // console.log(book)
 })
 
-bookListEl.addEventListener('click', function(e) {
-  // console.log(e.target)
-
+bookListEl.addEventListener('click', e => {
   // instantiate ui
   var ui = new UI()
 
   // delete book
   ui.deleteBook(e.target)
+  Store.removeBook(e.target.parentElement.previousElementSibling.innerHTML)
 
   // success alert
   ui.showAlert('A book has been deleted', 'success')
